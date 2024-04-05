@@ -1,0 +1,49 @@
+import random
+import string
+import csv
+
+# Define headers
+headers = ["Vaccination_event_id", "Receipt_id", "Vaccine_name", "Vaccine_group_name", "Lot_number"]
+
+# Number of rows to generate
+num_rows = 10
+
+# Function to generate random alphanumeric string (Vaccination Event ID)
+def generate_event_id(length=10):
+  return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+
+# Function to generate random alphanumeric string (Receipt ID)
+def generate_receipt_id(length=8):
+  return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+
+# Function to generate random vaccine names
+vaccine_names = ["Pfizer", "Moderna", "AstraZeneca", "Johnson & Johnson"]
+def generate_vaccine_name():
+  return random.choice(vaccine_names)
+
+# Function to generate random vaccine group names
+vaccine_group_names = ["Adults 18+", "Children 5-11", "Children 12-17", "Boosters"]
+def generate_vaccine_group_name():
+  return random.choice(vaccine_group_names)
+
+# Function to generate random lot numbers
+def generate_lot_number(length=10):
+  return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length))
+
+# Generate lists of random data
+event_ids = [generate_event_id() for _ in range(num_rows)]
+receipt_ids = [generate_receipt_id() for _ in range(num_rows)]
+vaccine_names = [generate_vaccine_name() for _ in range(num_rows)]
+vaccine_group_names = [generate_vaccine_group_name() for _ in range(num_rows)]
+lot_numbers = [generate_lot_number() for _ in range(num_rows)]
+
+# Combine data into rows
+data = list(zip(event_ids, receipt_ids, vaccine_names, vaccine_group_names, lot_numbers))
+
+# Write data to CSV file
+with open("synthetic_data.csv", "w", newline="") as csvfile:
+  writer = csv.writer(csvfile)
+  writer.writerow(headers)  # Write headers
+  writer.writerows(data)  # Write data rows
+
+print(f"Generated {num_rows} rows of synthetic data and saved to synthetic_data.csv")
